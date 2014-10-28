@@ -10,7 +10,8 @@ class RegexHighlighter
   def highlights
     {
       match_data: match_data,
-      captures: captures
+      captures: captures,
+      match_string: match_string
     }
   end
 
@@ -29,6 +30,12 @@ class RegexHighlighter
 
   def built_regex
     @built_regex ||= Regexp.new(pattern, flags)
+  end
+
+  def match_string
+    test_string.gsub(built_regex) do |match|
+      "--{#{match}}--"
+    end
   end
 
 end

@@ -6,17 +6,26 @@ describe RegexHighlighter do
   let(:test_string) { "this is the test string though" }
   let(:match_params) do
     {
-      pattern: pattern,
-      flags: flags,
-      test_string: test_string
+      "pattern"     => pattern,
+      "flags"       => flags,
+      "test_string" => test_string
     }
+  end
+
+  subject do
+    described_class.new(match_params)
   end
 
   it "knows the pattern" do
     expect(described_class.new(match_params).pattern).to eq(pattern)
   end
 
-  subject { described_class.new(match_params) }
+  describe "#match_string" do
+    it "wraps matches in <span>'s" do
+      expect(subject.match_string).to eq("--{th}--is is --{th}--e test string --{th}--ough")
+    end
+  end
+
 
   describe "#match_data" do
     it "returns an array of matches" do
@@ -52,17 +61,19 @@ describe RegexHighlighter do
         expect(subject.highlights).to eq(
           {
             match_data: ["th", "th", "th" ],
-            captures: [["th"],["th"], ["th"]]
+            captures: [["th"],["th"], ["th"]],
+            match_string: "--{th}--is is --{th}--e test string --{th}--ough"
           }
         )
       end
     end
     context "without captures" do
-      it "return the match_data and the captures" do
+      it "return the match_data and the captures and highlighted string" do
         expect(subject.highlights).to eq(
           {
             match_data: ["th", "th", "th" ],
-            captures: []
+            captures: [],
+            match_string: "--{th}--is is --{th}--e test string --{th}--ough"
           }
         )
       end

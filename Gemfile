@@ -7,3 +7,4 @@ gem 'thin'
 gem 'oj'
 
 gem 'pry'
+gem 'sinatra-cross_origin'
