@@ -1,5 +1,6 @@
 class RegexHighlighter
-  attr_reader :pattern, :flags, :test_string
+
+  attr_reader :pattern, :test_string
 
   def initialize(match_params)
     @pattern      =  match_params.fetch("pattern", "")
@@ -13,6 +14,11 @@ class RegexHighlighter
       captures: captures,
       match_string: match_string
     }
+  end
+
+  def flags
+    return nil if @flags == ""
+    @flags
   end
 
   def match_data
